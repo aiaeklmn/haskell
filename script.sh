@@ -1,4 +1,10 @@
-touch file1
-touch file2
-awk -F "|" '{print $1}' file >> file1
-awk -F "|" '{print $2}' file >> file2
+echo -n > file1
+echo -n > file2
+while read y 
+do
+i=`expr index "$y" "|"`
+let i=i-1
+echo $y | cut -b 1-$i >> file1
+let i=i+2
+echo $y | cut -b $i-${#y} >> file2
+done < file
